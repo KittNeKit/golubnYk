@@ -1,4 +1,5 @@
-from rest_framework import generics
+from django.contrib.auth import get_user_model
+from rest_framework import generics, mixins, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
@@ -16,3 +17,12 @@ class ManageUserView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class UsersViewSet(
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    viewsets.GenericViewSet,
+):
+    queryset = get_user_model().objects.all()
+    serializer_class = UserSerializer
