@@ -31,22 +31,21 @@ class PostViewSet(
         return [int(str_id) for str_id in qs.split(",")]
 
     def get_queryset(self):
-        if self.action == "list":
-            following_ids = self.request.user.following.values_list(
-                'id', flat=True
-            )
+        following_ids = self.request.user.following.values_list(
+            'id', flat=True
+        )
 
-            queryset = Post.objects.filter(
-                Q(creator=self.request.user) |
-                Q(creator_id__in=following_ids)
-            )
+        queryset = Post.objects.filter(
+            Q(creator=self.request.user) |
+            Q(creator_id__in=following_ids)
+        )
 
-            hashtags = self.request.query_params.get("hashtags")
+        hashtags = self.request.query_params.get("hashtags")
 
-            if hashtags:
-                hashtags_id = self._params_to_ints(hashtags)
-                queryset = queryset.filter(hashtags__id__in=hashtags_id)
-            return queryset
+        if hashtags:
+            hashtags_id = self._params_to_ints(hashtags)
+            queryset = queryset.filter(hashtags__id__in=hashtags_id)
+        return queryset
 
     @extend_schema(
         parameters=[
@@ -75,4 +74,3 @@ class HashtagsViewSet(
     serializer_class = HashtagsSerializer
     authentication_classes = (JWTAuthentication,)
     permission_classes = IsAdminOrIfAuthenticatedReadOnly,
-
