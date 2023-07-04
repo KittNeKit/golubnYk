@@ -1,6 +1,7 @@
 from django.db.models import Q
+from drf_spectacular.utils import OpenApiParameter, extend_schema
 
-from rest_framework import viewsets, mixins
+from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
 from social.models import Post, Hashtags
@@ -13,6 +14,10 @@ class PostViewSet(
     mixins.ListModelMixin,
     GenericViewSet
 ):
+    """
+    Posts create and list view with filtering by hashtags id.
+    User can see only owns posts and posts their following users
+    """
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
@@ -23,7 +28,9 @@ class PostViewSet(
 
     def get_queryset(self):
         if self.action == "list":
-            following_ids = self.request.user.following.values_list('id', flat=True)
+            following_ids = self.request.user.following.values_list(
+                'id', flat=True
+            )
 
             queryset = Post.objects.filter(
                 Q(creator=self.request.user) |
@@ -37,6 +44,19 @@ class PostViewSet(
                 queryset = queryset.filter(hashtags__id__in=hashtags_id)
             return queryset
 
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                "hashtags",
+                type={"type": "list", "items": {"type": "number"}},
+                description="Filter by hashtags id (ex. ?hashtags=2,5)",
+            ),
+
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
 
@@ -46,5 +66,6 @@ class HashtagsViewSet(
     mixins.ListModelMixin,
     GenericViewSet
 ):
+    """Hashtags create and get view"""
     queryset = Hashtags.objects.all()
     serializer_class = HashtagsSerializer
