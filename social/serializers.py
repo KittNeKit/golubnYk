@@ -1,18 +1,18 @@
 from rest_framework import serializers
 
-from social.models import Follow, Post
-
-
-class FollowSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Follow
-        fields = None # todo fields
+from social.models import Post, Hashtags
 
 
 class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ("creator", "text")
+        fields = ("creator", "text", "hashtags")
         read_only_fields = ("creator",)
+
+
+class HashtagsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Hashtags
+        fields = "name",
