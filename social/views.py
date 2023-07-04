@@ -32,7 +32,7 @@ class PostViewSet(
 
     def get_queryset(self):
         following_ids = self.request.user.following.values_list(
-            'id', flat=True
+            "id", flat=True
         )
 
         queryset = Post.objects.filter(

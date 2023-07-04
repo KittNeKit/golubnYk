@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from drf_spectacular.views import SpectacularSwaggerView, SpectacularAPIView
 
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/user/", include("user.urls", namespace="user")),

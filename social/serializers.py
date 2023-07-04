@@ -8,7 +8,7 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ("creator", "text", "hashtags")
-        read_only_fields = ("creator",)
+        read_only_fields = "creator",
 
 
 class HashtagsSerializer(serializers.ModelSerializer):
