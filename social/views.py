@@ -3,8 +3,10 @@ from drf_spectacular.utils import OpenApiParameter, extend_schema
 
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from social.models import Post, Hashtags
+from social.permissions import IsAdminOrIfAuthenticatedReadOnly
 from social.serializers import PostSerializer, HashtagsSerializer
 
 
@@ -20,6 +22,8 @@ class PostViewSet(
     """
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = IsAdminOrIfAuthenticatedReadOnly,
 
     @staticmethod
     def _params_to_ints(qs):
@@ -69,3 +73,6 @@ class HashtagsViewSet(
     """Hashtags create and get view"""
     queryset = Hashtags.objects.all()
     serializer_class = HashtagsSerializer
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = IsAdminOrIfAuthenticatedReadOnly,
+

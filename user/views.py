@@ -38,6 +38,7 @@ class UsersViewSet(
     """
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         username = self.request.query_params.get("username")
