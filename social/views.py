@@ -23,11 +23,13 @@ class PostViewSet(
 
     def get_queryset(self):
         if self.action == "list":
-            # queryset = Post.objects.filter(
-            #     Q(creator=self.request.user)
-            # )
+            following_ids = self.request.user.following.values_list('id', flat=True)
 
-            queryset = self.queryset
+            queryset = Post.objects.filter(
+                Q(creator=self.request.user) |
+                Q(creator_id__in=following_ids)
+            )
+
             hashtags = self.request.query_params.get("hashtags")
 
             if hashtags:
