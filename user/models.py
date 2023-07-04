@@ -47,3 +47,8 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     objects = UserManager()
+
+    followers = models.ManyToManyField("User", related_name="following")
+
+    def __str__(self):
+        return self.username
