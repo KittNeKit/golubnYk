@@ -6,6 +6,9 @@ class UserSerializer(serializers.ModelSerializer):
     following = serializers.SlugRelatedField(
         many=True, read_only=True, slug_field="username"
     )
+    followers = serializers.SlugRelatedField(
+        many=True, read_only=True, slug_field="username"
+    )
 
     class Meta:
         model = get_user_model()
