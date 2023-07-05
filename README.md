@@ -12,7 +12,7 @@ git clone https://github.com/your-username/social-media-api
 
 2. Change to the project's directory:
 ```bash
-cd project-name
+cd social-media-api
 ```
 3. Сopy .env_sample file with your examples of env variables to your .env
 file
@@ -55,6 +55,8 @@ python manage.py runserver
 ```
 9. Access the website locally at http://localhost:8000.
 
+
+10. Link to the swagger documentation http://localhost:8000/api/doc/swagger/
 
 ## Features:
 
