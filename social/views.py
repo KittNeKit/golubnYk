@@ -6,7 +6,7 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from social.models import Post, Hashtags
-from social.permissions import IsAdminOrIfAuthenticatedReadOnly
+from social.permissions import IsAdminOrIfAuthenticated
 from social.serializers import PostSerializer, HashtagsSerializer
 
 
@@ -23,7 +23,7 @@ class PostViewSet(
     queryset = Post.objects.all().prefetch_related("hashtags")
     serializer_class = PostSerializer
     authentication_classes = (JWTAuthentication,)
-    permission_classes = IsAdminOrIfAuthenticatedReadOnly,
+    permission_classes = IsAdminOrIfAuthenticated,
 
     @staticmethod
     def _params_to_ints(qs):
@@ -75,4 +75,4 @@ class HashtagsViewSet(
     queryset = Hashtags.objects.all()
     serializer_class = HashtagsSerializer
     authentication_classes = (JWTAuthentication,)
-    permission_classes = IsAdminOrIfAuthenticatedReadOnly,
+    permission_classes = IsAdminOrIfAuthenticated,
