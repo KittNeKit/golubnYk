@@ -36,7 +36,7 @@ class UsersViewSet(
     """
     List and Detail view for users profile with filtering by username
     """
-    queryset = get_user_model().objects.all()
+    queryset = get_user_model().objects.prefetch_related("followers", "following")
     serializer_class = UserSerializer
     permission_classes = (IsAuthenticated,)
 

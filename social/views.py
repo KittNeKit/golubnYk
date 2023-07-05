@@ -20,7 +20,7 @@ class PostViewSet(
     Posts create and list view with filtering by hashtags id.
     User can see only owns posts and posts their following users
     """
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().prefetch_related("hashtags")
     serializer_class = PostSerializer
     authentication_classes = (JWTAuthentication,)
     permission_classes = IsAdminOrIfAuthenticatedReadOnly,
@@ -31,11 +31,13 @@ class PostViewSet(
         return [int(str_id) for str_id in qs.split(",")]
 
     def get_queryset(self):
+        queryset = self.queryset
+
         following_ids = self.request.user.following.values_list(
             "id", flat=True
         )
 
-        queryset = Post.objects.filter(
+        queryset = queryset.filter(
             Q(creator=self.request.user) |
             Q(creator_id__in=following_ids)
         )
