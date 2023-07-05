@@ -18,4 +18,4 @@ class Post(models.Model):
         related_name="posts"
     )
     text = models.TextField()
-    hashtags = models.ManyToManyField(Hashtags, related_name="post", null=True)
+    hashtags = models.ManyToManyField(Hashtags, related_name="post", blank=True)
