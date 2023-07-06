@@ -1,4 +1,4 @@
-from rest_framework.permissions import SAFE_METHODS, BasePermission
+from rest_framework.permissions import BasePermission
 
 
 class IsAdminOrIfAuthenticated(BasePermission):
@@ -10,4 +10,3 @@ class IsAdminOrIfAuthenticated(BasePermission):
             )
             or (request.user and request.user.is_staff)
         )
-
