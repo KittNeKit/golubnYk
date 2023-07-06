@@ -20,7 +20,7 @@ class PostViewSet(
     Posts create and list view with filtering by hashtags id.
     User can see only owns posts and posts their following users
     """
-    queryset = Post.objects.all().prefetch_related("hashtags")
+    queryset = Post.objects.prefetch_related("hashtags")
     serializer_class = PostSerializer
     authentication_classes = (JWTAuthentication,)
     permission_classes = IsAdminOrIfAuthenticated,
