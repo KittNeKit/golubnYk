@@ -1,4 +1,4 @@
-# Social Media API
+# golubnYk
 
 This Django REST framework-based API serves as a RESTful interface for a social media platform.
 
@@ -63,12 +63,12 @@ python manage.py runserver
 - Authentication: Implement a secure method of accessing API endpoints by utilizing JWT token-based authentication.
 
 
-- Post management: Enable comprehensive CRUD functionality to handle posts, including their creation, retrieval. Additionally, provide the ability to filter posts based on their hashtags. Also User can see only owns posts and posts their following users
+- Post management: Enable comprehensive CRUD functionality to handle posts, including their creation, retrieval. Additionally, provide the ability to filter posts based on their hashtags. Also, Users can see only owns posts and posts from their following users
 
 
 
 
-- User management: Allow users to register, modify their profile details.
+- User management: Allow users to register, and modify their profile details.
 
 
 - API documentation: Utilize Swagger UI to automatically generate interactive API documentation, which facilitates developers in effortlessly exploring and testing the API's endpoints.
